@@ -29,8 +29,8 @@ using var cts = new CancellationTokenSource();
 Console.CancelKeyPress += (_, e) => { e.Cancel = true; cts.Cancel(); };
 
 var brokerEp = ParseEndpoint(Arg(args, "--broker", "127.0.0.1:5001"));
-var type     = Arg(args, "--type", "Test");
-var subject  = Arg(args, "--subject", "demo.test");
-var payload  = Arg(args, "--payload", "{\"hello\":\"world\"}");
+var type = Arg(args, "--type", "Test");
+var subject = Arg(args, "--subject", "demo.test");
+var payload = Arg(args, "--payload", "{\"hello\":\"world\"}");
 
 await TcpSender.SendAsync(brokerEp, MessageEnvelope.Create(type, subject, payload), cts.Token);

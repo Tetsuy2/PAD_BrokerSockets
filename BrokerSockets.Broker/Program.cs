@@ -13,7 +13,6 @@ static IPEndPoint ParseEndpoint(string s)
             .First(a => a.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
     return new IPEndPoint(ip, port);
 }
-
 static string Arg(string[] args, string key, string def = "")
 {
     var i = Array.IndexOf(args, key);

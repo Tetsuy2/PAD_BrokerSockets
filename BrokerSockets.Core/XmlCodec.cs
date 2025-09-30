@@ -9,7 +9,7 @@ public static class XmlCodec
 {
     private static readonly XNamespace Ns = "urn:broker:envelope:v1";
 
-    // Generează XML în același namespace cu XSD
+    // Generate XML (DOM) in schema namespace
     public static string ToXml(MessageEnvelope e) =>
         new XElement(Ns + "Envelope",
             new XElement(Ns + "Type", e.Type),
@@ -19,12 +19,12 @@ public static class XmlCodec
             new XElement(Ns + "Id", e.Id.ToString())
         ).ToString(SaveOptions.DisableFormatting);
 
-    // SAX + validare XSD + parsare robustă a timestamp-ului
+    // Validate against XSD (SAX) + extract via DOM
     public static bool TryParseAndValidate(string xml, string xsdPath, out MessageEnvelope? e, out string? error)
     {
         e = null; error = null;
 
-        // 1) VALIDARE XSD (SAX)
+        // 1) SAX/XSD validation
         string? validationError = null;
         var settings = new XmlReaderSettings { ValidationType = ValidationType.Schema };
         settings.Schemas.Add("urn:broker:envelope:v1", xsdPath);
@@ -33,14 +33,11 @@ public static class XmlCodec
 
         using (var sr = new StringReader(xml))
         using (var xr = XmlReader.Create(sr, settings))
-        {
-            // parcurgem tot documentul (fără să extragem valori aici)
-            while (xr.Read()) { /* nop */ }
-        }
+        { while (xr.Read()) { /* validate */ } }
 
         if (validationError is not null) { error = validationError; return false; }
 
-        // 2) EXTRACȚIE CU DOM (XDocument) – pe același namespace
+        // 2) DOM extraction
         var doc = XDocument.Parse(xml);
         XNamespace ns = "urn:broker:envelope:v1";
         var root = doc.Root;
@@ -54,14 +51,8 @@ public static class XmlCodec
         string? id = root.Element(ns + "Id")?.Value;
 
         if (!Guid.TryParse(id, out var gid)) { error = "Invalid GUID."; return false; }
-
-        // Parse exact pe formatul "O"
-        if (!DateTime.TryParseExact(
-                ts,
-                "O",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
-                out var dt))
+        if (!DateTime.TryParseExact(ts, "O", CultureInfo.InvariantCulture,
+                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out var dt))
         { error = "Invalid timestamp."; return false; }
 
         var env = new MessageEnvelope(
@@ -71,9 +62,7 @@ public static class XmlCodec
         );
 
         if (!EnvelopeValidator.IsValid(env, out var reason)) { error = reason; return false; }
-
         e = env;
         return true;
     }
-
 }

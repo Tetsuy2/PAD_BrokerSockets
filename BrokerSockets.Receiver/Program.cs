@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using BrokerSockets.Core;
 using static BrokerSockets.Core.JsonCodec;
 using static BrokerSockets.Core.EnvelopeValidator;
@@ -17,9 +18,10 @@ static bool Has(string[] args, string key) => Array.IndexOf(args, key) >= 0;
 if (args.Length == 0) { Show(); return; }
 
 var port = ArgI(args, "--port", 6001);
-var inbox = Arg(args, "--inbox", "data\\inbox"); // director unde salvăm
+var inbox = Arg(args, "--inbox", "data\\inbox");
 var saveXml = Has(args, "--save-xml");
-var xsdPath = Arg(args, "--xsd", "");             // calea către envelope.xsd (opțional)
+var xsdPath = Arg(args, "--xsd", "");
+
 Directory.CreateDirectory(inbox);
 
 Console.WriteLine($"Usage: dotnet run -- --port 6001 [--inbox data\\inbox] [--save-xml] [--xsd C:\\path\\envelope.xsd]");
@@ -35,10 +37,7 @@ try
         _ = Task.Run(() => HandleClientAsync(client, inbox, saveXml, xsdPath));
     }
 }
-finally
-{
-    listener.Stop();
-}
+finally { listener.Stop(); }
 
 static async Task HandleClientAsync(TcpClient client, string inbox, bool saveXml, string xsdPath)
 {
@@ -50,40 +49,33 @@ static async Task HandleClientAsync(TcpClient client, string inbox, bool saveXml
     while ((line = await reader.ReadLineAsync()) is not null)
     {
         if (!TryDeserialize(line, out var env) || env is null)
-        {
-            Console.WriteLine("[Receiver/TCP] invalid json (ignored)");
-            continue;
-        }
+        { Console.WriteLine("[Receiver/TCP] invalid json (ignored)"); continue; }
+
         if (!IsValid(env, out var reason))
-        {
-            Console.WriteLine($"[Receiver/TCP] rejected: {reason}");
-            continue;
-        }
+        { Console.WriteLine($"[Receiver/TCP] rejected: {reason}"); continue; }
 
-        // 1) Salvare JSONL (inbox.jsonl cumulativ)
+        // 1) append JSONL
         var jsonlPath = Path.Combine(inbox, "inbox.jsonl");
-        await File.AppendAllTextAsync(jsonlPath,
-            System.Text.Json.JsonSerializer.Serialize(env) + Environment.NewLine);
+        await File.AppendAllTextAsync(jsonlPath, JsonSerializer.Serialize(env) + Environment.NewLine);
 
-        // 2) (opțional) salvare XML + validare XSD
+        // 2) optional XML + XSD validate
         if (saveXml)
         {
             var xml = XmlCodec.ToXml(env);
-            // nume fișier prietenos
             var name = $"{env.Timestamp:yyyyMMdd_HHmmss}_{env.Id:N}.xml";
             var xmlPath = Path.Combine(inbox, name);
             await File.WriteAllTextAsync(xmlPath, xml, Encoding.UTF8);
 
-            if (!string.IsNullOrWhiteSpace(xsdPath) && File.Exists(xsdPath))
+            if (!string.IsNullOrWhiteSpace(xsdPath))
             {
-                if (XmlCodec.TryParseAndValidate(xml, xsdPath, out var parsed, out var err))
-                    Console.WriteLine($"[Receiver/TCP] XML OK: {parsed!.Type}/{parsed.Subject}");
-                else
-                    Console.WriteLine($"[Receiver/TCP] XML INVALID: {err}");
-            }
-            else if (!string.IsNullOrWhiteSpace(xsdPath))
-            {
-                Console.WriteLine($"[Receiver/TCP] XSD not found: {xsdPath}");
+                if (File.Exists(xsdPath))
+                {
+                    if (XmlCodec.TryParseAndValidate(xml, xsdPath, out var parsed, out var err))
+                        Console.WriteLine($"[Receiver/TCP] XML OK: {parsed!.Type}/{parsed.Subject}");
+                    else
+                        Console.WriteLine($"[Receiver/TCP] XML INVALID: {err}");
+                }
+                else Console.WriteLine($"[Receiver/TCP] XSD not found: {xsdPath}");
             }
         }
 

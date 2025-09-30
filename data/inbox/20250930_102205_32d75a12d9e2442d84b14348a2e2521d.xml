@@ -1,0 +1,1 @@
+﻿<Envelope xmlns="urn:broker:envelope:v1"><Type>Test</Type><Subject>xml.sample</Subject><Payload>{"user":"ana","score":42}</Payload><Timestamp>2025-09-30T10:22:05.8918301Z</Timestamp><Id>32d75a12-d9e2-442d-84b1-4348a2e2521d</Id></Envelope>

@@ -52,7 +52,7 @@ public sealed class TcpReceiver
                 if (_inboxDir is not null)
                 {
                     Directory.CreateDirectory(_inboxDir);
-                    var path = Path.Combine(_inboxDir, "inbox.jsonl");
+                    var path = Path.Combine(_inboxDir, $"{env.Subject}.jsonl");
                     await File.AppendAllTextAsync(path,
                         JsonSerializer.Serialize(env) + Environment.NewLine, ct);
                 }

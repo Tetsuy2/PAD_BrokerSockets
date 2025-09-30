@@ -1,0 +1,1 @@
+﻿<Envelope xmlns="urn:broker:envelope:v1"><Type>Test</Type><Subject>demo.test</Subject><Payload>{"hello":"world"}</Payload><Timestamp>2025-09-30T07:20:03.2853541Z</Timestamp><Id>4631a814-0552-40cb-95b5-3346cc57d56e</Id></Envelope>

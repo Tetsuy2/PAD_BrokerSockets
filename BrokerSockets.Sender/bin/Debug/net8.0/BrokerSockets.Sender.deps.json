@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "BrokerSockets.Sender/1.0.0": {
+        "dependencies": {
+          "BrokerSockets.Core": "1.0.0"
+        },
+        "runtime": {
+          "BrokerSockets.Sender.dll": {}
+        }
+      },
+      "BrokerSockets.Core/1.0.0": {
+        "runtime": {
+          "BrokerSockets.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BrokerSockets.Sender/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BrokerSockets.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

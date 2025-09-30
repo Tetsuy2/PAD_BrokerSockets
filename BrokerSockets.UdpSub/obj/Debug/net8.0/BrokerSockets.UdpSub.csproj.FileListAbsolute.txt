@@ -1,0 +1,14 @@
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\bin\Debug\net8.0\BrokerSockets.UdpSub.exe
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\bin\Debug\net8.0\BrokerSockets.UdpSub.deps.json
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\bin\Debug\net8.0\BrokerSockets.UdpSub.runtimeconfig.json
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\bin\Debug\net8.0\BrokerSockets.UdpSub.dll
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\bin\Debug\net8.0\BrokerSockets.UdpSub.pdb
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\obj\Debug\net8.0\BrokerSockets.UdpSub.GeneratedMSBuildEditorConfig.editorconfig
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\obj\Debug\net8.0\BrokerSockets.UdpSub.AssemblyInfoInputs.cache
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\obj\Debug\net8.0\BrokerSockets.UdpSub.AssemblyInfo.cs
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\obj\Debug\net8.0\BrokerSockets.UdpSub.csproj.CoreCompileInputs.cache
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\obj\Debug\net8.0\BrokerSockets.UdpSub.dll
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\obj\Debug\net8.0\refint\BrokerSockets.UdpSub.dll
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\obj\Debug\net8.0\BrokerSockets.UdpSub.pdb
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\obj\Debug\net8.0\BrokerSockets.UdpSub.genruntimeconfig.cache
+D:\Program paths\C#\BrokerSockets\BrokerSockets.UdpSub\obj\Debug\net8.0\ref\BrokerSockets.UdpSub.dll

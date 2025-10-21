@@ -1,1 +1,0 @@
-﻿<Envelope xmlns="urn:broker:envelope:v1"><Type>OrderCreated</Type><Subject>orders.new</Subject><Payload>{\</Payload><Timestamp>2025-09-23T22:12:34.5541904Z</Timestamp><Id>24dd0bee-0225-4630-b695-dcce8fa3d583</Id></Envelope>

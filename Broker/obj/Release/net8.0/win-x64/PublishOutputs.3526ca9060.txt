@@ -1,3 +1,0 @@
-D:\Program paths\C#\Agent Mesagerie\Broker.pdb
-D:\Program paths\C#\Agent Mesagerie\Common.pdb
-D:\Program paths\C#\Agent Mesagerie\Broker.exe

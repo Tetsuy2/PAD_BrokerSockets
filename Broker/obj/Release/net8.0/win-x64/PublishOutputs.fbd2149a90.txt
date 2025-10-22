@@ -1,8 +1,0 @@
-D:\Program paths\C#\Agent Mesagerie\out\Broker\Broker.exe
-D:\Program paths\C#\Agent Mesagerie\out\Broker\Broker.dll
-D:\Program paths\C#\Agent Mesagerie\out\Broker\Broker.deps.json
-D:\Program paths\C#\Agent Mesagerie\out\Broker\Broker.runtimeconfig.json
-D:\Program paths\C#\Agent Mesagerie\out\Broker\Broker.pdb
-D:\Program paths\C#\Agent Mesagerie\out\Broker\Newtonsoft.Json.dll
-D:\Program paths\C#\Agent Mesagerie\out\Broker\Common.dll
-D:\Program paths\C#\Agent Mesagerie\out\Broker\Common.pdb

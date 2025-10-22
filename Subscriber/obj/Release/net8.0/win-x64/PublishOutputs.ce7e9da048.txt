@@ -1,8 +1,0 @@
-D:\Program paths\C#\Agent Mesagerie\out\Subscriber\Subscriber.exe
-D:\Program paths\C#\Agent Mesagerie\out\Subscriber\Subscriber.dll
-D:\Program paths\C#\Agent Mesagerie\out\Subscriber\Subscriber.deps.json
-D:\Program paths\C#\Agent Mesagerie\out\Subscriber\Subscriber.runtimeconfig.json
-D:\Program paths\C#\Agent Mesagerie\out\Subscriber\Subscriber.pdb
-D:\Program paths\C#\Agent Mesagerie\out\Subscriber\Newtonsoft.Json.dll
-D:\Program paths\C#\Agent Mesagerie\out\Subscriber\Common.dll
-D:\Program paths\C#\Agent Mesagerie\out\Subscriber\Common.pdb

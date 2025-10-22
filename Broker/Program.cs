@@ -1,35 +1,34 @@
-﻿using Common;
+using Broker.Services;
+using Broker.Services.Interfaces;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
-namespace Broker
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddGrpc();
+
+builder.WebHost.ConfigureKestrel(options =>
 {
-    class Program
+    options.ListenLocalhost(5001, listen =>
     {
-        static void Main()
-        {
-            Console.WriteLine("Broker starting...");
+        listen.Protocols = HttpProtocols.Http2;
+        listen.UseHttps();
+    });
+});
 
-            // 1) PERSISTENT STORE
-            var store = new FileMessageStore(Settings.PERSISTENCE_FILE);
+builder.Services.AddSingleton<IMessageStorageService, MessageStorageService>();
+builder.Services.AddSingleton<IConnectionStorageService, ConnectionStorageService>();
+builder.Services.AddSingleton<IRouterService, RouterService>();
+builder.Services.AddSingleton<IXmlValidator, XmlValidator>();
+builder.Services.AddSingleton<IRetainedStore, RetainedStore>();   // <� NEW
+builder.Services.AddHostedService<SenderWorker>();
 
-            // 2) Replay din persistentă (opțional, demonstrează durability)
-            foreach (var p in store.ReadAll())
-                PayloadStorage.Enqueue(p);
+var app = builder.Build();
 
-            // 3) TCP accept
-            var server = new BrokerSocket(store);
-            server.Start(Settings.BROKER_IP, Settings.BROKER_PORT);
+app.MapGrpcService<PublisherService>();
+app.MapGrpcService<SubscriberService>();
+app.MapGet("/health", () => "OK");
+app.MapGet("/", () => "Use a gRPC client.");
 
-            // 4) Worker (TCP unicast + UDP multicast)
-            var worker = new MessageWorker();
-            var t = Task.Factory.StartNew(worker.Run, TaskCreationOptions.LongRunning);
-
-            Console.WriteLine($"Broker on TCP {Settings.BROKER_IP}:{Settings.BROKER_PORT}, " +
-                              $"UDP multicast {Settings.MULTICAST_GROUP}:{Settings.MULTICAST_PORT}");
-            Console.WriteLine("Press ENTER to stop.");
-            Console.ReadLine();
-
-            PayloadStorage.Complete();
-            t.Wait(1000);
-        }
-    }
-}
+app.Run();

@@ -1,0 +1,8 @@
+D:\Program paths\C#\Agent Mesagerie\out\Publisher\Publisher.exe
+D:\Program paths\C#\Agent Mesagerie\out\Publisher\Publisher.dll
+D:\Program paths\C#\Agent Mesagerie\out\Publisher\Publisher.deps.json
+D:\Program paths\C#\Agent Mesagerie\out\Publisher\Publisher.runtimeconfig.json
+D:\Program paths\C#\Agent Mesagerie\out\Publisher\Publisher.pdb
+D:\Program paths\C#\Agent Mesagerie\out\Publisher\Newtonsoft.Json.dll
+D:\Program paths\C#\Agent Mesagerie\out\Publisher\Common.dll
+D:\Program paths\C#\Agent Mesagerie\out\Publisher\Common.pdb

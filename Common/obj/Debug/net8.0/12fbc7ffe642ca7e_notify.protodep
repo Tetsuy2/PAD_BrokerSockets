@@ -1,2 +1,0 @@
-obj\Debug\net8.0\Protos/Notify.cs \
-obj\Debug\net8.0\Protos/NotifyGrpc.cs: Protos/notify.proto
